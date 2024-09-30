@@ -2,6 +2,7 @@ package app;
 
 import app.config.*;
 import io.javalin.Javalin;
+import io.javalin.http.Context;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
 public class Main
@@ -19,5 +20,18 @@ public class Main
         // Routing
 
         app.get("/", ctx ->  ctx.render("index.html"));
+        app.post("/login", ctx -> login(ctx) );
+    }
+
+    public static void login(Context ctx) {
+        String username = ctx.formParam("username");
+        String password = ctx.formParam("password");
+        if (username.equals("admin") && password.equals("admin")) {
+            ctx.render("tasks.html");
+        }
+        else {
+            ctx.render("index.html");
+        }
+
     }
 }

@@ -9,9 +9,17 @@
 
 <body>
 
-<h1>Welcome to the Javalin / Thymeleaf demo</h1>
+<h1>Welcome to the Four Things Plus website</h1>
 
-<p>This is your first web application in this world</p>
+<p>Please login</p>
+
+<form method="post">
+    <input type="text" name="username" placeholder="Username"><br><br>
+    <input type="password" name="password" placeholder="Password"><br><br>
+    <button type="submit" formaction="/login">Log in</button>
+</form>
+
+<p th:text="${#ctx.message}"></p>
 
 </body>
 </html>
