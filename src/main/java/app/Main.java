@@ -30,6 +30,7 @@ public class Main
             ctx.render("tasks.html");
         }
         else {
+            ctx.attribute("message", "Invalid username or password");
             ctx.render("index.html");
         }
 
