@@ -1,12 +1,23 @@
 package app;
 
 import app.config.*;
+import app.controllers.UserController;
+import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
 public class Main
 {
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "postgres";
+    private static final String URL = "jdbc:postgresql://localhost:5432/%s?currentSchema=public";
+    private static final String DB = "fourthingsplus";
+
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
+
+
+
     public static void main(String[] args)
     {
         // Initializing Javalin and Jetty webserver
@@ -20,19 +31,8 @@ public class Main
         // Routing
 
         app.get("/", ctx ->  ctx.render("index.html"));
-        app.post("/login", ctx -> login(ctx) );
+        UserController.addRoute(app,connectionPool);
     }
 
-    public static void login(Context ctx) {
-        String username = ctx.formParam("username");
-        String password = ctx.formParam("password");
-        if (username.equals("admin") && password.equals("admin")) {
-            ctx.render("tasks.html");
-        }
-        else {
-            ctx.attribute("message", "Invalid username or password");
-            ctx.render("index.html");
-        }
 
-    }
 }
