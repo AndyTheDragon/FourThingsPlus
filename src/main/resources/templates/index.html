@@ -13,7 +13,7 @@
 <div class="col-lg-8 mx-auto p-4 py-md-5">
     <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
         <a href="/" class="d-flex align-items-center text-body-emphasis text-decoration-none">
-            <img src="../public/images/logo.png" class="img-fluid" alt="Four Things Plus Logo">
+            <img src="../public/images/logo.png" th:src="@{/images/logo.png}" class="img-fluid" alt="Four Things Plus Logo">
         </a>
     </header>
 
@@ -33,7 +33,7 @@
             <button class ="btn btn-primary btn-lg px-5 mx-auto" type="submit" formaction="/login">Log in</button>
         </form>
 
-        <div class="bg-warning" th:text="${#ctx.message}"></div>
+        <div class="bg-warning my-3 py-3" th:text="${#ctx.message}"></div>
     </main>
 
     <footer class="pt-5 my-5 text-body-secondary border-top">

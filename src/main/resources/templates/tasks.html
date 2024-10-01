@@ -13,14 +13,14 @@
 <div class="col-lg-8 mx-auto p-4 py-md-5">
   <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
     <a href="/" class="d-flex align-items-center text-body-emphasis text-decoration-none">
-      <img src="../public/images/logo.png" class="img-fluid" alt="Four Things Plus Logo">
+      <img src="../public/images/logo.png" th:src="@{/images/logo.png}" class="img-fluid" alt="Four Things Plus Logo">
     </a>
   </header>
 
   <main class="mx-auto col-md-8 vstack gap-3">
     <h1 class="d-block mx-auto">Tasks</h1>
 
-    <div class="bg-warning" th:text="${#ctx.message}"></div>
+    <div class="bg-warning " th:text="${#ctx.message}"></div>
 
     <form method="post">
       <div class="card mb-4">
