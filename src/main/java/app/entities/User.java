@@ -2,20 +2,20 @@ package app.entities;
 
 public class User
 {
-    private final int user_id;
+    private final int userId;
     private final String username;
     private final String password;
 
-    public User(int user_id, String username, String password)
+    public User(int userId, String username, String password)
     {
-        this.user_id = user_id;
+        this.userId = userId;
         this.username = username;
         this.password = password;
     }
 
-    public int getUser_id()
+    public int getUserId()
     {
-        return user_id;
+        return userId;
     }
 
     public String getUsername()
@@ -32,7 +32,7 @@ public class User
     public String toString()
     {
         return "User{" +
-                "user_id=" + user_id +
+                "user_id=" + userId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';

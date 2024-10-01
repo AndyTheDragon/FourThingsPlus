@@ -4,20 +4,20 @@ import java.util.Date;
 
 public class Task
 {
-    private final int task_id;
-    private final String task_name;
-    private final String task_description;
+    private final int taskId;
+    private final String taskName;
+    private final String taskDescription;
     private boolean done;
     private final User user;
-    private Date last_changed;
+    private Date lastChanged;
 
-    public Task(int task_id, String task_name, String task_description, User user, Date last_changed, boolean done)
+    public Task(int taskId, String taskName, String taskDescription, User user, Date lastChanged, boolean done)
     {
-        this.task_id = task_id;
-        this.task_name = task_name;
-        this.task_description = task_description;
+        this.taskId = taskId;
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
         this.user = user;
-        this.last_changed = last_changed;
+        this.lastChanged = lastChanged;
         this.done = done;
     }
 
@@ -26,24 +26,24 @@ public class Task
         return done;
     }
 
-    public Date getLast_changed()
+    public Date getLastChanged()
     {
-        return last_changed;
+        return lastChanged;
     }
 
-    public String getTask_description()
+    public String getTaskDescription()
     {
-        return task_description;
+        return taskDescription;
     }
 
-    public int getTask_id()
+    public int getTaskId()
     {
-        return task_id;
+        return taskId;
     }
 
-    public String getTask_name()
+    public String getTaskName()
     {
-        return task_name;
+        return taskName;
     }
 
     public User getUser()
@@ -53,7 +53,7 @@ public class Task
 
     public void change() {
         this.done = !this.done;
-        this.last_changed = new Date();
+        this.lastChanged = new Date();
     }
 
     public void setDone(boolean done)
@@ -61,8 +61,8 @@ public class Task
         this.done = done;
     }
 
-    public void setLast_changed(Date last_changed)
+    public void setLastChanged(Date lastChanged)
     {
-        this.last_changed = last_changed;
+        this.lastChanged = lastChanged;
     }
 }

@@ -17,15 +17,15 @@ public class UserController
 
     }
 
-    public static void login(Context ctx, ConnectionPool connectionPool) {
+    private static void login(Context ctx, ConnectionPool connectionPool) {
         String username = ctx.formParam("username");
         String password = ctx.formParam("password");
         try
         {
             User user = UserMapper.login(username, password, connectionPool);
             ctx.sessionAttribute("user", user);
-            ctx.render("tasks.html");
-            //ctx.redirect("/tasks");
+            //ctx.render("tasks.html");
+            ctx.redirect("/tasks");
         }
         catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
