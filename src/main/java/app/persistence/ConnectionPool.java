@@ -58,7 +58,7 @@ public class ConnectionPool
     /***
      * Getting a live connection from a Hikari Connection Pool
      * @return a database connection to be used in sql requests
-     * @throws SQLException
+     * @throws SQLException desc
      */
     public synchronized Connection getConnection() throws SQLException
     {

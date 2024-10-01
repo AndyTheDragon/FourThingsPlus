@@ -18,7 +18,7 @@ public class UserMapper
         String sql = "SELECT * FROM users WHERE user_name = ? AND password = ?";
 
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);)
+             PreparedStatement preparedStatement = connection.prepareStatement(sql))
         {
 
             preparedStatement.setString(1, name);

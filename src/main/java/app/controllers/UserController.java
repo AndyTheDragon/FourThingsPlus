@@ -7,7 +7,6 @@ import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
-import java.sql.SQLException;
 
 public class UserController
 {

@@ -2,9 +2,9 @@ package app.entities;
 
 public class User
 {
-    private int user_id;
-    private String username;
-    private String password;
+    private final int user_id;
+    private final String username;
+    private final String password;
 
     public User(int user_id, String username, String password)
     {

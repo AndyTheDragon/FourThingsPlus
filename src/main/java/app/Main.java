@@ -4,7 +4,6 @@ import app.config.*;
 import app.controllers.UserController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
-import io.javalin.http.Context;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
 public class Main
