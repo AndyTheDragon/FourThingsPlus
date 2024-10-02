@@ -12,12 +12,6 @@ import java.util.*;
 
 public class TaskMapper
 {
-    public static Map<Integer, Task> getTasks(int user_id, ConnectionPool connectionPool) {
-        Map<Integer, Task> tasks = new HashMap<>();
-        String sql = "SELECT * FROM tasks WHERE user_id = ?";
-
-        return tasks;
-    }
 
     public static List<Task> getTasks(boolean status, User user, ConnectionPool pool)
     {
@@ -43,5 +37,48 @@ public class TaskMapper
         }
 
         return tasks;
+    }
+
+    public static boolean toggleTask(Task task, ConnectionPool pool) {
+        String sql = "UPDATE task SET done = ? WHERE task_id = ?";
+        try (Connection conn = pool.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            if(task.isDone()) {
+                stmt.setBoolean(1, false);
+            } else {
+                stmt.setBoolean(1, true);
+            }
+            stmt.setInt(2, task.getTaskId());
+            int rowsAffected = stmt.executeUpdate();
+            if(rowsAffected == 0) {
+                return false;
+            }
+            return true;
+
+        } catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+
+        }
+    }
+
+    public static int addTask(Task task, ConnectionPool pool)
+    {
+        String sql = "INSERT INTO task (task_name, task_description, user_id) VALUES (?, ?, ?)";
+        try (Connection conn = pool.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, task.getTaskName());
+            stmt.setString(2, task.getTaskDescription());
+            stmt.setInt(3, task.getUser().getUserId());
+            stmt.executeUpdate();
+            var keySet = stmt.getGeneratedKeys();
+            if (keySet.next()) {
+                return keySet.getInt(1);
+            }
+             else return -1;
+        } catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 }
