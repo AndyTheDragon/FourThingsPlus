@@ -40,19 +40,18 @@ public class TaskMapper
         return tasks;
     }
 
-    public static boolean toggleTask(int taskId, ConnectionPool pool) throws DatabaseException
+    public static void toggleTask(int taskId, ConnectionPool pool) throws DatabaseException
     {
         String sql = "UPDATE task SET done = CASE WHEN done=true THEN false ELSE true END" +
                 " WHERE task_id = ?";
         try (Connection conn = pool.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(2, taskId);
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected != 0;
+            stmt.setInt(1, taskId);
+            stmt.executeUpdate();
 
         } catch (SQLException e)
         {
-            throw new DatabaseException(e.getMessage());
+            throw new DatabaseException("Toggle task: " + e.getMessage());
 
         }
     }
