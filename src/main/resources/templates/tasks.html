@@ -83,7 +83,7 @@
           <a th:each="task : ${taskList}" href="#" th:href="@{/tasks/{id}(id=${task.taskId})}" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
               <h5 class="mb-1" th:text="${task.taskName}">Task name</h5>
-              <small>3 days ago</small>
+              <small th:text="${task.age}">3 days ago</small>
             </div>
             <p class="mb-1" th:text="${task.taskDescription}">Task description</p>
           </a>

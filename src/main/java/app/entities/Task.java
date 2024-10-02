@@ -1,5 +1,7 @@
 package app.entities;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class Task
@@ -9,9 +11,9 @@ public class Task
     private final String taskDescription;
     private boolean done;
     private final User user;
-    private Date lastChanged;
+    private LocalDate lastChanged;
 
-    public Task(int taskId, String taskName, String taskDescription, User user, Date lastChanged, boolean done)
+    public Task(int taskId, String taskName, String taskDescription, User user, LocalDate lastChanged, boolean done)
     {
         this.taskId = taskId;
         this.taskName = taskName;
@@ -26,7 +28,7 @@ public class Task
         return done;
     }
 
-    public Date getLastChanged()
+    public LocalDate getLastChanged()
     {
         return lastChanged;
     }
@@ -53,7 +55,7 @@ public class Task
 
     public void change() {
         this.done = !this.done;
-        this.lastChanged = new Date();
+        this.lastChanged = LocalDate.now();
     }
 
     public void setDone(boolean done)
@@ -61,8 +63,15 @@ public class Task
         this.done = done;
     }
 
-    public void setLastChanged(Date lastChanged)
+    public void setLastChanged(LocalDate lastChanged)
     {
         this.lastChanged = lastChanged;
+    }
+
+    public String getAge() {
+        LocalDate currentDate = LocalDate.now();
+        long age = ChronoUnit.DAYS.between(lastChanged,currentDate);
+        return age + " days ago";
+
     }
 }

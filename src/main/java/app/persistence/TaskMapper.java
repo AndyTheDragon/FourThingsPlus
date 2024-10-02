@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.*;
 
 public class TaskMapper
@@ -33,7 +34,7 @@ public class TaskMapper
                 String taskName = rs.getString("task_name");
                 String taskDescription = rs.getString("task_description");
                 boolean done = rs.getBoolean("done");
-                Date lastChanged = rs.getDate("last_changed");
+                LocalDate lastChanged = rs.getDate("last_changed").toLocalDate();
                 tasks.add(new Task(taskId, taskName, taskDescription, user, lastChanged, done));
             }
         } catch (SQLException e)
