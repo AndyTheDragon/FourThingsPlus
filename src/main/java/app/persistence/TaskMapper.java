@@ -2,6 +2,7 @@ package app.persistence;
 
 import app.entities.Task;
 import app.entities.User;
+import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +14,7 @@ import java.util.*;
 public class TaskMapper
 {
 
-    public static List<Task> getTasks(boolean status, User user, ConnectionPool pool)
+    public static List<Task> getTasks(boolean status, User user, ConnectionPool pool) throws DatabaseException
     {
         List<Task> tasks = new ArrayList<>();
         String sql = "SELECT * FROM task WHERE user_id = ? AND done= ?";
@@ -33,43 +34,37 @@ public class TaskMapper
             }
         } catch (SQLException e)
         {
-            throw new RuntimeException(e);
+            throw new DatabaseException(e.getMessage());
         }
 
         return tasks;
     }
 
-    public static boolean toggleTask(Task task, ConnectionPool pool) {
-        String sql = "UPDATE task SET done = ? WHERE task_id = ?";
+    public static boolean toggleTask(int taskId, ConnectionPool pool) throws DatabaseException
+    {
+        String sql = "UPDATE task SET done = CASE WHEN done=true THEN false ELSE true END" +
+                " WHERE task_id = ?";
         try (Connection conn = pool.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            if(task.isDone()) {
-                stmt.setBoolean(1, false);
-            } else {
-                stmt.setBoolean(1, true);
-            }
-            stmt.setInt(2, task.getTaskId());
+            stmt.setInt(2, taskId);
             int rowsAffected = stmt.executeUpdate();
-            if(rowsAffected == 0) {
-                return false;
-            }
-            return true;
+            return rowsAffected != 0;
 
         } catch (SQLException e)
         {
-            throw new RuntimeException(e);
+            throw new DatabaseException(e.getMessage());
 
         }
     }
 
-    public static int addTask(Task task, ConnectionPool pool)
+    public static int addTask(String taskName, String taskDesc, User user, ConnectionPool pool) throws DatabaseException
     {
         String sql = "INSERT INTO task (task_name, task_description, user_id) VALUES (?, ?, ?)";
         try (Connection conn = pool.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, task.getTaskName());
-            stmt.setString(2, task.getTaskDescription());
-            stmt.setInt(3, task.getUser().getUserId());
+            stmt.setString(1, taskName);
+            stmt.setString(2, taskDesc);
+            stmt.setInt(3, user.getUserId());
             stmt.executeUpdate();
             var keySet = stmt.getGeneratedKeys();
             if (keySet.next()) {
@@ -78,7 +73,7 @@ public class TaskMapper
              else return -1;
         } catch (SQLException e)
         {
-            throw new RuntimeException(e);
+            throw new DatabaseException(e.getMessage());
         }
     }
 }
