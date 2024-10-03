@@ -27,13 +27,14 @@ public class UserController
     {
         String username = ctx.formParam("username");
         String password = ctx.formParam("password");
-        if ((username!=null && username.isEmpty()) || password.isEmpty()) {
+        if ((username!=null && username.isBlank()) || password.isBlank()) {
             ctx.attribute("message", "Username and password cannot be empty.");
             ctx.render("createuser.html");
         }
         else {
             try {
                 User newUser = UserMapper.createUser(username, password, connectionPool);
+                ctx.attribute("message", "User created successfully.");
                 ctx.redirect("/login");
 
             } catch (DatabaseException e) {
