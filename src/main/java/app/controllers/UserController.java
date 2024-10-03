@@ -6,6 +6,7 @@ import app.persistence.ConnectionPool;
 import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import org.jetbrains.annotations.NotNull;
 
 
 public class UserController
@@ -14,7 +15,17 @@ public class UserController
     public static void addRoute(Javalin app, ConnectionPool connectionPool)
     {
         app.post("/login", ctx -> login(ctx, connectionPool) );
+        app.get("/login", ctx ->  ctx.render("index.html"));
+        app.get("/logout", ctx -> logout(ctx));
 
+
+    }
+
+    private static void logout(@NotNull Context ctx)
+    {
+        //Invalidate session
+        ctx.req().getSession().invalidate();
+        ctx.redirect("/");
     }
 
     private static void login(Context ctx, ConnectionPool connectionPool) {

@@ -5,7 +5,9 @@ import app.controllers.TaskController;
 import app.controllers.UserController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
+import io.javalin.http.Context;
 import io.javalin.rendering.template.JavalinThymeleaf;
+import org.jetbrains.annotations.NotNull;
 
 public class Main
 {
@@ -31,10 +33,8 @@ public class Main
         // Routing
 
         app.get("/", ctx ->  ctx.render("index.html"));
-        app.get("/login", ctx ->  ctx.render("index.html"));
         UserController.addRoute(app,connectionPool);
         TaskController.addRoute(app,connectionPool);
     }
-
 
 }
