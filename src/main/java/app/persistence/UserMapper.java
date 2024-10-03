@@ -3,10 +3,7 @@ package app.persistence;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserMapper
 {
@@ -35,5 +32,25 @@ public class UserMapper
             throw new RuntimeException(e);
         }
 
+    }
+
+    public static User createUser(String username, String password, ConnectionPool connectionPool) throws DatabaseException
+    {
+        String sql = "INSERT INTO users (user_name, password) VALUES (?, ?)";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            preparedStatement.executeUpdate();
+            var keySet = preparedStatement.getGeneratedKeys();
+            if (keySet.next()) {
+                return new User(keySet.getInt(1), username, password);
+            }
+            throw new DatabaseException("Invalid username/password combo.");
+        } catch (SQLException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 }

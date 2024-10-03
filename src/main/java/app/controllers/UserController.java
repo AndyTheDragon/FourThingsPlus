@@ -17,8 +17,30 @@ public class UserController
         app.post("/login", ctx -> login(ctx, connectionPool) );
         app.get("/login", ctx ->  ctx.render("index.html"));
         app.get("/logout", ctx -> logout(ctx));
+        app.post("/register", ctx -> createUser(ctx, connectionPool));
+        app.get("/register", ctx -> ctx.render("createuser.html"));
 
 
+    }
+
+    private static void createUser(@NotNull Context ctx, ConnectionPool connectionPool)
+    {
+        String username = ctx.formParam("username");
+        String password = ctx.formParam("password");
+        if ((username!=null && username.isEmpty()) || password.isEmpty()) {
+            ctx.attribute("message", "Username and password cannot be empty.");
+            ctx.render("createuser.html");
+        }
+        else {
+            try {
+                User newUser = UserMapper.createUser(username, password, connectionPool);
+                ctx.redirect("/login");
+
+            } catch (DatabaseException e) {
+                ctx.attribute("message", e.getMessage());
+                ctx.render("createuser.html");
+            }
+        }
     }
 
     private static void logout(@NotNull Context ctx)
