@@ -14,11 +14,12 @@ import java.util.List;
 public class TaskController
 {
     public static void addRoute(Javalin app, ConnectionPool conn) {
+        app.get("/tasks/cleardone", ctx -> cleardone(ctx, conn));
         app.get("/tasks/{id}", ctx -> toggleTask(ctx, conn));
         app.get("/tasks", ctx -> showTasks(ctx, conn));
         app.get("/task", ctx -> showTasks(ctx, conn));
         app.post("/task", ctx -> addTask(ctx, conn));
-        app.get("/tasks/cleardone", ctx -> cleardone(ctx, conn));
+
     }
 
     private static void cleardone(@NotNull Context ctx, ConnectionPool conn)
@@ -31,7 +32,7 @@ public class TaskController
         String taskName = ctx.formParam("taskname");
         String taskDesc = ctx.formParam("taskdesc");
         User user = ctx.sessionAttribute("user");
-        if (user==null || taskName.equals("") || taskDesc.equals("")) {
+        if (user==null || taskName.isBlank() || taskDesc.isBlank()) {
             ctx.redirect("/tasks");
             ctx.attribute("message", "You must login first");
         }
