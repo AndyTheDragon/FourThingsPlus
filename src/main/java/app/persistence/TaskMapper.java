@@ -42,7 +42,8 @@ public class TaskMapper
 
     public static void toggleTask(int taskId, ConnectionPool pool) throws DatabaseException
     {
-        String sql = "UPDATE task SET done = CASE WHEN done=true THEN false ELSE true END" +
+        String sql = "UPDATE task SET last_changed = now(), " +
+                "done = CASE WHEN done=true THEN false ELSE true END" +
                 " WHERE task_id = ?";
         try (Connection conn = pool.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
