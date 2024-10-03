@@ -16,7 +16,7 @@ public class UserController
     {
         app.post("/login", ctx -> login(ctx, connectionPool) );
         app.get("/login", ctx ->  ctx.render("index.html"));
-        app.get("/logout", ctx -> logout(ctx));
+        app.get("/logout", UserController::logout);
         app.post("/register", ctx -> createUser(ctx, connectionPool));
         app.get("/register", ctx -> ctx.render("createuser.html"));
 

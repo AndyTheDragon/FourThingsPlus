@@ -5,9 +5,7 @@ import app.controllers.TaskController;
 import app.controllers.UserController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
-import io.javalin.http.Context;
 import io.javalin.rendering.template.JavalinThymeleaf;
-import org.jetbrains.annotations.NotNull;
 
 public class Main
 {

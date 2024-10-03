@@ -2,7 +2,6 @@ package app.entities;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 public class Task
 {
@@ -51,21 +50,6 @@ public class Task
     public User getUser()
     {
         return user;
-    }
-
-    public void change() {
-        this.done = !this.done;
-        this.lastChanged = LocalDate.now();
-    }
-
-    public void setDone(boolean done)
-    {
-        this.done = done;
-    }
-
-    public void setLastChanged(LocalDate lastChanged)
-    {
-        this.lastChanged = lastChanged;
     }
 
     public String getAge() {
