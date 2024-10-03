@@ -68,7 +68,7 @@ public class TaskController
 
     private static void showTasks(Context ctx, ConnectionPool pool)
     {
-        if ((ctx.sessionAttribute("user") ==null)) {
+        if ((ctx.sessionAttribute("user") == null)) {
             ctx.attribute("message", "You must be logged in.");
 
             ctx.redirect("/");
