@@ -26,7 +26,7 @@
 
         <div class="col mx-auto mt-3">
             <div>
-                <a href="/createuser" th:if="${#ctx.session.user}== null" th:href="@{/createuser}">Create new account</a>
+                <a href="/createuser" th:if="${#ctx.session.user}== null" th:href="@{/register}">Create new account</a>
                 <a href="/logout" th:if="${#ctx.session.user}!= null" th:href="@{/logout}">Log out</a>
             </div>
         </div>
