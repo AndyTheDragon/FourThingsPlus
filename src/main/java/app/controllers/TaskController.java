@@ -18,6 +18,12 @@ public class TaskController
         app.get("/tasks", ctx -> showTasks(ctx, conn));
         app.get("/task", ctx -> showTasks(ctx, conn));
         app.post("/task", ctx -> addTask(ctx, conn));
+        app.get("/tasks/cleardone", ctx -> cleardone(ctx, conn));
+    }
+
+    private static void cleardone(@NotNull Context ctx, ConnectionPool conn)
+    {
+
     }
 
     private static void addTask(@NotNull Context ctx, ConnectionPool conn)
