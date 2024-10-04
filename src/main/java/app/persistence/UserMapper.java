@@ -50,7 +50,11 @@ public class UserMapper
             }
             throw new DatabaseException("Invalid username/password combo.");
         } catch (SQLException e) {
-            throw new DatabaseException(e.getMessage());
+            String msg = e.getMessage();
+            if (e.getMessage().startsWith("ERROR: duplicate key value ")){
+                msg = "Brugernavnet findes allerede. Vælg et andet";
+            }
+            throw new DatabaseException(msg);
         }
     }
 }
